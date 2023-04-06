@@ -12,22 +12,31 @@
   <body>
     <main>
       <section>
-        <div class="container">
-          <h1>Minimalist</h1>
-          <div class="todo-list">
-            <div class="day-task">
-              <h3 class="todo-title">Today's todo</h3>
-              <i class="fa fa-refresh refresh" aria-hidden="true"></i>
+        <div class="container d-flex flex-col">
+          <h1 class="align-center">Minimalist</h1>
+          <div class="todo-list d-flex flex-col">
+            <div class="day-task d-flex bg-white border-bottom">
+              <h3
+                class="todo-title px-10-py-15 bg-white text-gray border-bottom m-none"
+              >
+                Today's todo
+              </h3>
+              <i
+                class="fa fa-refresh refresh bg-white text-gray align-center"
+                aria-hidden="true"
+              ></i>
             </div>
-            <ul id="todo">
+            <ul id="todo" class="d-flex flex-col bg-white m-none">
               <input
                 type="text"
-                class="add-task-text"
+                class="add-task-text px-10-py-15 border-bottom border-none"
                 placeholder="Add to your list..."
               />
             </ul>
-            <div class="clear-all">
-              <button>Clear all completely</button>
+            <div class="clear-all d-flex justify-content bg-light-gray">
+              <button type="button" class="text-gray border-none">
+                Clear all completely
+              </button>
             </div>
           </div>
         </div>
