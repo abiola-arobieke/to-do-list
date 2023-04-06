@@ -49,7 +49,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://abiola-arobieke.github.io/to-do-list/)
+- [Coming Soon]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -82,10 +82,12 @@ Open the project on your code editor
 Change directory to the project folder
 
 ```sh
-  cd musical-concert
+  cd to-do-list
 ```
-Right click on index.html file and select "open with live server" to view 
-on your web browser.
+On your terminal, run
+```sh
+  npm start
+```
 
 ## 👥 Author <a name="authors"></a>
 
@@ -93,7 +95,7 @@ on your web browser.
 
 
 - GitHub: [@abiola-arobieke](https://github.com/abiola-arobieke)
-- Linkedin: [abiola-arobieke](https://linkedin.com/in/abiola-arobieke)
+- Linkedin: [@abiola-arobieke](https://linkedin.com/in/abiola-arobieke)
 - Twitter: [@abiola_arobieke](https://twitter.com/abiola_arobieke)
 
 
