@@ -55,8 +55,21 @@ button {
   float: right;
 }
 
-.day-task {
-  justify-content: space-between;
+input[type='text' i] {
+  font-size: 15px;
+}
+
+.edit-task {
+  margin-right: 8px;
+  margin-left: 2px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.edit-input {
+  width: 75%;
 }
 
 /* utility classes */
@@ -73,6 +86,10 @@ button {
   background-color: #fff;
 }
 
+.bg-yellow {
+  background-color: rgba(247, 247, 187, 1);
+}
+
 .align-center {
   align-self: center;
 }
@@ -81,12 +98,20 @@ button {
   background-color: #f6f6f6;
 }
 
-.justify-content {
+.justify-content-ctr {
   justify-content: center;
+}
+
+.justify-spc-btw {
+  justify-content: space-between;
 }
 
 .px-10-py-15 {
   padding: 15px 10px;
+}
+
+.py-15 {
+  padding: 15px 0;
 }
 
 .text-gray {
@@ -104,6 +129,30 @@ button {
 .m-none {
   margin-block-start: 0;
   margin-block-end: 0;
+}
+
+.mr-6 {
+  margin-right: 6px;
+}
+
+.ft-20 {
+  font-size: 20px;
+}
+
+.mb-5 {
+  margin-bottom: 2px;
+}
+
+.no-pad {
+  padding: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
 }
 
 @media only screen and (min-width: 768px) {
