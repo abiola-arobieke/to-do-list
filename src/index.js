@@ -1,24 +1,35 @@
 import './style.css';
 
+// declare variables globally
 const task = JSON.parse(localStorage.getItem('allTask')) || [];
+const todoTask = JSON.parse(localStorage.getItem('todo-id')) || {};
 const todoList = document.querySelector('#todo');
 const newTask = document.getElementById('new-task');
 let moreBtn;
-let checkedItem = [];
 
+// save task id
+const saveTaskId = () => {
+  localStorage.setItem('todo-id', JSON.stringify(todoTask));
+};
+
+// update task array
+const saveTask = () => {
+  localStorage.setItem('allTask', JSON.stringify(task));
+};
+
+// create html tags and load data
 const loadTask = () => {
   // remove old list item that was created
   while (todoList.hasChildNodes()) {
     todoList.removeChild(todoList.firstChild);
   }
-
   // Fetch data, create and insert data newly created elements
   task.forEach((todo, index) => {
     const htmlTemplate = `
       <div class="px-10-py-15 text-gray border-bottom">
           <input type="checkbox" class="checkbox" id="${index}" value="${todo.completed}" />
-          <span>${todo.description}</span>
-          <del class="hide">
+          <span class="${!todo.completed}">${todo.description}</span>
+          <del class=" ${todo.completed}">
               <span>${todo.description}</span>
           </del>
           <div class="dropdown more">
@@ -29,7 +40,7 @@ const loadTask = () => {
       </div>
       <div class="edit-container px-10-py-15 text-gray border-bottom bg-yellow hide">
           <input type="checkbox" class="edit-task bg-yellow" id="${index}" 
-          value="${todo.completed}" />
+          value="${todo.completed}"/>
           <input class="text-gray edit-input border-none bg-yellow" type="text" 
           value="${todo.description}" />
           <div class="dropdown more">
@@ -43,7 +54,6 @@ const loadTask = () => {
     liTag.innerHTML = htmlTemplate;
     todoList.appendChild(liTag);
   });
-
   // Get all more buttons
   moreBtn = document.querySelectorAll('.drop-btn');
   moreBtn.forEach((eachMoreBtn, btnIndex) => {
@@ -64,26 +74,25 @@ const loadTask = () => {
           task.forEach((tas, index) => {
             if (parseInt(taskIndex, 10) === index) {
               task.splice(index, 1);
-              localStorage.setItem('allTask', JSON.stringify(task));
+              saveTask();
               loadTask();
             }
           });
         });
         // Edit a task
         const updateTask = delBtnContainer.firstElementChild.nextElementSibling;
-        updateTask.addEventListener('keyup', (event) => {
+        updateTask.addEventListener('blur', () => {
           if (updateTask.value) {
-            if (event.code === 'Enter') {
-              const taskData = {
-                description: '',
-                completed: false,
-              };
-              taskData.description = updateTask.value;
-              task[btnIndex] = taskData;
-              updateTask.value = taskData.description;
-              localStorage.setItem('allTask', JSON.stringify(task));
-              loadTask();
-            }
+            const taskData = {
+              description: '',
+              completed: false,
+            };
+
+            taskData.description = updateTask.value;
+            task[btnIndex] = taskData;
+            updateTask.value = taskData.description;
+            saveTask();
+            loadTask();
           }
         });
       }
@@ -92,24 +101,44 @@ const loadTask = () => {
   // check and cross selected item
   const checkboxes = document.querySelectorAll('.checkbox');
   checkboxes.forEach((checkbox) => {
+    if (checkbox.value === 'true') {
+      checkbox.setAttribute('checked', 'checked');
+    }
     checkbox.addEventListener('change', (event) => {
       const btnGrandParent = event.target.parentElement.parentElement;
       const description = btnGrandParent.firstElementChild.children.item(1);
       const markedDesc = btnGrandParent.firstElementChild.children.item(2);
-      const taskID = event.target.id;
-      let items;
+      const taskArrayIndex = event.target.id;
 
       if (event.target.checked) {
         event.target.value = true;
-        markedDesc.classList.remove('hide');
-        description.classList.add('hide');
-        checkedItem.push(taskID);
+        markedDesc.classList.remove('false');
+        markedDesc.classList.add('true');
+        description.classList.remove('true');
+        description.classList.add('false');
+
+        const taskData = {
+          completed: true,
+        };
+
+        task[taskArrayIndex].completed = taskData.completed;
+        saveTask();
+        event.target.setAttribute('checked', 'checked');
       } else {
         event.target.value = false;
-        markedDesc.classList.add('hide');
-        description.classList.remove('hide');
-        items = checkedItem.filter((i) => !(parseInt(i, 10) === parseInt(taskID, 10)));
-        checkedItem = items;
+        event.target.removeAttribute('checked');
+
+        markedDesc.classList.remove('true');
+        markedDesc.classList.add('false');
+        description.classList.remove('false');
+        description.classList.add('true');
+
+        const taskData = {
+          completed: false,
+        };
+
+        task[taskArrayIndex].completed = taskData.completed;
+        saveTask();
       }
     });
   });
@@ -117,14 +146,24 @@ const loadTask = () => {
 
 // Method for creating new task
 const createTask = () => {
+  if (task.length === 0) {
+    todoTask.id = 1;
+    saveTaskId();
+  } else {
+    todoTask.id += 1;
+    saveTaskId();
+  }
+
   const taskData = {
+    id: '',
     description: '',
     completed: false,
   };
 
+  taskData.id = todoTask.id;
   taskData.description = newTask.value;
   task.push(taskData);
-  localStorage.setItem('allTask', JSON.stringify(task));
+  saveTask();
   newTask.value = '';
   loadTask();
 };
@@ -143,10 +182,11 @@ addTask.addEventListener('keyup', (event) => {
 const delCheckedTask = document.getElementById('clear-task');
 delCheckedTask.addEventListener('click', () => {
   if (task.length !== 0) {
-    for (let i = checkedItem.length - 1; i >= 0; i -= 1) {
-      task.splice(checkedItem[i], 1);
+    const selected = document.querySelectorAll('[checked=checked]');
+    for (let i = selected.length - 1; i >= 0; i -= 1) {
+      task.splice(selected[i].id, 1);
     }
-    localStorage.setItem('allTask', JSON.stringify(task));
+    saveTask();
     loadTask();
   }
 });
