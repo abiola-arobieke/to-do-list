@@ -1,21 +1,14 @@
 import './style.css';
+import {
+  task, todoTask,
+  saveTaskId, saveTask,
+}
+from './savetask.js';
+import check from './checkbox.js';
 
-// declare variables globally
-const task = JSON.parse(localStorage.getItem('allTask')) || [];
-const todoTask = JSON.parse(localStorage.getItem('todo-id')) || {};
 const todoList = document.querySelector('#todo');
 const newTask = document.getElementById('new-task');
 let moreBtn;
-
-// save task id
-const saveTaskId = () => {
-  localStorage.setItem('todo-id', JSON.stringify(todoTask));
-};
-
-// update task array
-const saveTask = () => {
-  localStorage.setItem('allTask', JSON.stringify(task));
-};
 
 // create html tags and load data
 const loadTask = () => {
@@ -98,50 +91,8 @@ const loadTask = () => {
       }
     });
   });
-  // check and cross selected item
-  const checkboxes = document.querySelectorAll('.checkbox');
-  checkboxes.forEach((checkbox) => {
-    if (checkbox.value === 'true') {
-      checkbox.setAttribute('checked', 'checked');
-    }
-    checkbox.addEventListener('change', (event) => {
-      const btnGrandParent = event.target.parentElement.parentElement;
-      const description = btnGrandParent.firstElementChild.children.item(1);
-      const markedDesc = btnGrandParent.firstElementChild.children.item(2);
-      const taskArrayIndex = event.target.id;
 
-      if (event.target.checked) {
-        event.target.value = true;
-        markedDesc.classList.remove('false');
-        markedDesc.classList.add('true');
-        description.classList.remove('true');
-        description.classList.add('false');
-
-        const taskData = {
-          completed: true,
-        };
-
-        task[taskArrayIndex].completed = taskData.completed;
-        saveTask();
-        event.target.setAttribute('checked', 'checked');
-      } else {
-        event.target.value = false;
-        event.target.removeAttribute('checked');
-
-        markedDesc.classList.remove('true');
-        markedDesc.classList.add('false');
-        description.classList.remove('false');
-        description.classList.add('true');
-
-        const taskData = {
-          completed: false,
-        };
-
-        task[taskArrayIndex].completed = taskData.completed;
-        saveTask();
-      }
-    });
-  });
+  check();
 };
 
 // Method for creating new task
