@@ -2,8 +2,7 @@ import './style.css';
 import {
   task, todoTask,
   saveTaskId, saveTask,
-}
-from './savetask.js';
+} from './savetask.js';
 import check from './checkbox.js';
 
 const todoList = document.querySelector('#todo');
@@ -20,7 +19,9 @@ const loadTask = () => {
   task.forEach((todo, index) => {
     const htmlTemplate = `
       <div class="px-10-py-15 text-gray border-bottom">
-          <input type="checkbox" class="checkbox" id="${index}" value="${todo.completed}" />
+          <input type="checkbox" class="checkbox" id="${index}" value="${
+  todo.completed
+}" />
           <span class="${!todo.completed}">${todo.description}</span>
           <del class=" ${todo.completed}">
               <span>${todo.description}</span>
@@ -134,9 +135,17 @@ const delCheckedTask = document.getElementById('clear-task');
 delCheckedTask.addEventListener('click', () => {
   if (task.length !== 0) {
     const selected = document.querySelectorAll('[checked=checked]');
-    for (let i = selected.length - 1; i >= 0; i -= 1) {
-      task.splice(selected[i].id, 1);
-    }
+
+    const selectedIds = [];
+    selected.forEach((select) => {
+      selectedIds.push(Number(select.id));
+    });
+
+    const newTasks = task.filter((t, index) => !selectedIds.includes(index));
+    task.length = 0;
+    newTasks.forEach((item) => {
+      task.push(item);
+    });
     saveTask();
     loadTask();
   }
