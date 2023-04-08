@@ -10,3 +10,5 @@ export const saveTaskId = () => {
 export const saveTask = () => {
   localStorage.setItem('allTask', JSON.stringify(task));
 };
+
+export const fetchTask = () => JSON.parse(localStorage.getItem('allTask')) || [];
