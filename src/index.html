@@ -15,7 +15,7 @@
         <div class="container d-flex flex-col">
           <h1 class="align-center">Minimalist</h1>
           <div class="todo-list d-flex flex-col">
-            <div class="day-task d-flex bg-white border-bottom">
+            <div class="day-task d-flex bg-white border-bottom justify-spc-btw">
               <h3
                 class="todo-title px-10-py-15 bg-white text-gray border-bottom m-none"
               >
@@ -26,16 +26,17 @@
                 aria-hidden="true"
               ></i>
             </div>
-            <ul id="todo" class="d-flex flex-col bg-white m-none">
-              <input
+            <input
+                id="new-task"
                 type="text"
                 class="add-task-text px-10-py-15 border-bottom border-none"
                 placeholder="Add to your list..."
+                autofocus
               />
-            </ul>
-            <div class="clear-all d-flex justify-content bg-light-gray">
-              <button type="button" class="text-gray border-none">
-                Clear all completely
+            <ul id="todo" class="d-flex flex-col bg-white m-none"></ul>
+            <div class="clear-all d-flex justify-content-ctr bg-light-gray">
+              <button type="button" id="clear-task" class="text-gray border-none">
+                <u>Clear all completed</u>
               </button>
             </div>
           </div>
