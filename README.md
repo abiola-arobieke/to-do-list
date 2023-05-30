@@ -47,9 +47,7 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🚀 Live Demo <a name="live-demo"></a>
-
-- [Coming Soon]
+## 🚀 Live Demo <a name="live-demo" href="https://abiola-arobieke.github.io/to-do-list/"></a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
